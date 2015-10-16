@@ -10,10 +10,12 @@ import os
 
 import event
 import context
+from timeout import time_limit
+from timeout import TimeoutException
 
 logging.basicConfig(stream=sys.stdout,
                     level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+                    format='[%(levelname)s %(asctime)s] %(message)s')
 
 
 def run(args):
@@ -29,7 +31,10 @@ def run(args):
     logger.info("Event: {}".format(e))
 
     logger.info("START RequestId: {}".format(request_id))
-    result = execute(func, e, c)
+    try:
+        result = execute(func, e, c)
+    except TimeoutException as e:
+        result = str(e)
     logger.info("END RequestId: {}".format(request_id))
 
     logger.info("RESULT: {}".format(result))
@@ -47,7 +52,10 @@ def load(path, function_name):
 
 def execute(func, event, context):
     try:
-        result = func(event, context)
+        with time_limit(context.timeout):
+            result = func(event, context)
+    except TimeoutException as err:
+        raise err
     except:
         err = sys.exc_info()
         result = json.dumps({

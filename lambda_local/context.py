@@ -15,15 +15,16 @@ class Context(object):
         self.log_stream_name = "undefined"
         self.identity = None
         self.client_context = None
+        self.timeout = timeout
         self.duration = timedelta(seconds=timeout)
 
     def get_remaining_time_in_millis(self):
-        if self.timeout is None:
+        if self.timelimit is None:
             raise Exception("Context not activated.")
-        return millis_interval(datetime.now(), self.timeout)
+        return millis_interval(datetime.now(), self.timelimit)
 
     def activate(self):
-        self.timeout = datetime.now() + self.duration
+        self.timelimit = datetime.now() + self.duration
         return self
 
 
