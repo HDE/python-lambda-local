@@ -27,6 +27,8 @@ def parse_args():
                         help="Lambda function file name")
     parser.add_argument("event", metavar="EVENT", type=str,
                         help="Event data file name.")
+    parser.add_argument("-l", "--library", metavar="LIBRARY_PATH",
+                        type=str, help="Path of 3rd party libraries.")
     parser.add_argument("-f", "--function", metavar="HANDLER_FUNCTION",
                         type=str, default="handler",
                         help="Lambda function handler name. \

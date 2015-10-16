@@ -6,22 +6,24 @@ import traceback
 import json
 import logging
 import uuid
+import os
 
 import event
 import context
 
 logging.basicConfig(stream=sys.stdout,
-                    level=logging.DEBUG,
+                    level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 def run(args):
     e = event.read_event(args.event)
     c = context.Context(args.timeout)
+    if args.library is not None:
+        load_lib(args.library)
     func = load(args.file, args.function)
 
     logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
     request_id = uuid.uuid4()
 
     logger.info("Event: {}".format(e))
@@ -31,6 +33,10 @@ def run(args):
     logger.info("END RequestId: {}".format(request_id))
 
     logger.info("RESULT: {}".format(result))
+
+
+def load_lib(path):
+    sys.path.append(os.path.abspath(path))
 
 
 def load(path, function_name):
