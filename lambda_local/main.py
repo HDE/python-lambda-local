@@ -49,6 +49,11 @@ def load_lib(path):
 
 def load(request_id, path, function_name):
     mod_name = 'request-' + str(request_id)
+
+    file_path = os.path.abspath(path)
+    file_directory = os.path.dirname(file_path)
+    sys.path.append(file_directory)
+
     mod = imp.load_source(mod_name, path)
     func = getattr(mod, function_name)
     return func
