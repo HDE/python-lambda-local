@@ -57,7 +57,7 @@ def load(request_id, path, function_name):
 def execute(func, event, context):
     try:
         with time_limit(context.timeout):
-            result = func(event, context)
+            result = func(event, context.activate())
     except TimeoutException as err:
         raise err
     except:
