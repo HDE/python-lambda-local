@@ -9,12 +9,15 @@ from __future__ import print_function
 import argparse
 from main import run
 import sys
+from multiprocessing import Process
 
 
 def main():
     args = parse_args()
     try:
-        run(args)
+        p = Process(target=run, args=(args,))
+        p.start()
+        p.join()
     except:
         e = sys.exc_info()
         print(e[1])

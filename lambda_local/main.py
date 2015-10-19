@@ -23,10 +23,10 @@ def run(args):
     c = context.Context(args.timeout)
     if args.library is not None:
         load_lib(args.library)
-    func = load(args.file, args.function)
+    request_id = uuid.uuid4()
+    func = load(request_id, args.file, args.function)
 
     logger = logging.getLogger()
-    request_id = uuid.uuid4()
 
     logger.info("Event: {}".format(e))
 
@@ -34,18 +34,22 @@ def run(args):
     try:
         result = execute(func, e, c)
     except TimeoutException as e:
-        result = str(e)
+        result = e
     logger.info("END RequestId: {}".format(request_id))
 
-    logger.info("RESULT: {}".format(result))
+    if type(result) is TimeoutException:
+        logger.error("RESULT: {}".format(result))
+    else:
+        logger.info("RESULT: {}".format(result))
 
 
 def load_lib(path):
     sys.path.append(os.path.abspath(path))
 
 
-def load(path, function_name):
-    mod = imp.load_source('', path)
+def load(request_id, path, function_name):
+    mod_name = 'request-' + str(request_id)
+    mod = imp.load_source(mod_name, path)
     func = getattr(mod, function_name)
     return func
 
