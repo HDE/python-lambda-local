@@ -15,7 +15,7 @@ from timeout import TimeoutException
 
 logging.basicConfig(stream=sys.stdout,
                     level=logging.INFO,
-                    format='[%(levelname)s %(asctime)s] %(message)s')
+                    format='[%(name)s - %(levelname)s - %(asctime)s] %(message)s')
 
 
 def run(args):
