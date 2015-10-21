@@ -7,6 +7,8 @@ import json
 import logging
 import uuid
 import os
+import timeit
+from botocore.vendored.requests.packages import urllib3
 
 import event
 import context
@@ -16,6 +18,7 @@ from timeout import TimeoutException
 logging.basicConfig(stream=sys.stdout,
                     level=logging.INFO,
                     format='[%(name)s - %(levelname)s - %(asctime)s] %(message)s')
+urllib3.disable_warnings()
 
 
 def run(args):
@@ -27,20 +30,29 @@ def run(args):
     func = load(request_id, args.file, args.function)
 
     logger = logging.getLogger()
+    result = None
 
     logger.info("Event: {}".format(e))
 
     logger.info("START RequestId: {}".format(request_id))
+
+    start_time = timeit.default_timer()
     try:
         result = execute(func, e, c)
-    except TimeoutException as e:
-        result = e
+    except TimeoutException as te:
+        result = te
+    end_time = timeit.default_timer()
+
     logger.info("END RequestId: {}".format(request_id))
 
     if type(result) is TimeoutException:
-        logger.error("RESULT: {}".format(result))
+        logger.error("RESULT:\n{}".format(result))
     else:
-        logger.info("RESULT: {}".format(result))
+        logger.info("RESULT:\n{}".format(result))
+
+    duration = "{0:.2f} ms".format((end_time - start_time) * 1000)
+    logger.info("REPORT RequestId: {}\tDuration: {}".format(
+        request_id, duration))
 
 
 def load_lib(path):
