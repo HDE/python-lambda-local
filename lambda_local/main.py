@@ -1,4 +1,7 @@
-#!/usr/bin/env python2.7
+'''
+Copyright 2015 HDE, Inc.
+Licensed under MIT.
+'''
 
 import imp
 import sys

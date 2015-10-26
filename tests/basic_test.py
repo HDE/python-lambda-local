@@ -5,7 +5,7 @@ Meant for use with py.test.
 Write each test as a function named test_<something>.
 Read more here: http://pytest.org/
 
-Copyright 2015, YANG Xudong
+Copyright 2015 HDE, Inc.
 Licensed under MIT
 '''
 

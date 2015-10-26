@@ -5,7 +5,7 @@ Note that "python setup.py test" invokes pytest on the package. With
 appropriately configured setup.cfg, this will check both xxx_test modules and
 docstrings.
 
-Copyright 2015, YANG Xudong.
+Copyright 2015 HDE, Inc.
 Licensed under MIT.
 '''
 import sys
@@ -32,24 +32,21 @@ setup(name="python-lambda-local",
       version=version,
       description="Run lambda function in python on local machine.",
       long_description=open("README.md").read(),
-      classifiers=[ # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[
         'Development Status :: 1 - Planning',
         'Programming Language :: Python'
       ],
       keywords="AWS Lambda",
       author="YANG Xudong",
       author_email="xudong.yang@hde.co.jp",
-      url="https://github.com/yxd-hde/python-lambda-local",
+      url="https://github.com/HDE/python-lambda-local",
       license="MIT",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
       tests_require=['pytest'],
       cmdclass={'test': PyTest},
-
       install_requires=['boto3'],
-      # TODO: List executable scripts, provided by the package (this is just
-      # an example)
       entry_points={
         'console_scripts': ['python-lambda-local=lambda_local:main']
       })
