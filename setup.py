@@ -31,7 +31,7 @@ version = "0.1"
 setup(name="python-lambda-local",
       version=version,
       description="Run lambda function in python on local machine.",
-      long_description=open("README.md").read(),
+      long_description=open("README.rst").read(),
       classifiers=[
         'Development Status :: 1 - Planning',
         'Programming Language :: Python'
