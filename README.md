@@ -1,5 +1,7 @@
 # python-lambda-local
 
+[![Join the chat at https://gitter.im/HDE/python-lambda-local](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Run lambda function on local machine
 
 ## Prepare development environment
