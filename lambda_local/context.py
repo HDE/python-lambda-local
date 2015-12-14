@@ -8,10 +8,10 @@ from datetime import timedelta
 
 
 class Context(object):
-    def __init__(self, timeout):
+    def __init__(self, timeout, arn_string, version_name):
         self.function_name = "undefined"
-        self.function_version = "undefined"
-        self.invoked_function_arn = "undefined"
+        self.function_version = version_name
+        self.invoked_function_arn = arn_string
         self.memory_limit_in_mb = 0
         self.aws_request_id = "undefined"
         self.log_group_name = "undefined"

@@ -26,7 +26,7 @@ urllib3.disable_warnings()
 
 def run(args):
     e = event.read_event(args.event)
-    c = context.Context(args.timeout)
+    c = context.Context(args.timeout, args.arn_string, args.version_name)
     if args.library is not None:
         load_lib(args.library)
     request_id = uuid.uuid4()
