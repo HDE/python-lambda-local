@@ -40,12 +40,10 @@ Default: \"handler\".")
                         default=3,
                         help="Seconds until lambda function timeout. \
 Default: 3")
-
-    parser.add_argument("-a", "--arn-string", metavar="ARN_STRING", type=str, default="",
-                        help="arn string for function")
-
-    parser.add_argument("-n", "--version-name", metavar="VERSION_NAME", type=str, default="",
-                        help="function version name")
+    parser.add_argument("-a", "--arn-string", metavar="ARN_STRING", type=str,
+                        default="", help="arn string for function")
+    parser.add_argument("-v", "--version-name", metavar="VERSION_NAME",
+                        type=str, default="", help="function version name")
 
     return parser.parse_args()
 
