@@ -16,5 +16,6 @@ build:
           echo "pip version $(pip --version) running"
 
     - script:
-        name: pypi deploy
-        code: ./deploy.sh
+        name: build
+        code: |
+          python setup.py sdist bdist_wheel
