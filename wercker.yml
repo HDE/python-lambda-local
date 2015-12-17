@@ -16,3 +16,10 @@ build:
         name: build
         code: |
           python setup.py sdist bdist_wheel
+
+deploy:
+  pypi:
+    - script:
+        name: deploy to pypi
+        code: |
+          ./deploy.sh
