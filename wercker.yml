@@ -22,4 +22,4 @@ deploy:
   - script:
       name: deploy to pypi
       code: |
-        ./deploy.sh
+        sh deploy.sh
