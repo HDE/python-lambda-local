@@ -19,7 +19,7 @@ build:
 
 deploy:
   pypi:
-    - script:
-        name: deploy to pypi
-        code: |
-          ./deploy.sh
+  - script:
+      name: deploy to pypi
+      code: |
+        ./deploy.sh
