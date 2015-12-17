@@ -6,9 +6,6 @@ build:
         name: setup virtual environment
         install_wheel: true # Enable wheel to speed up builds (experimental)
 
-    - pip-install:
-        clean_wheel_dir: true
-
     - script:
         name: echo python information
         code: |
