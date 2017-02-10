@@ -14,13 +14,12 @@ from multiprocessing import Process
 
 def main():
     args = parse_args()
-    try:
-        p = Process(target=run, args=(args,))
-        p.start()
-        p.join()
-    except:
-        e = sys.exc_info()
-        print(e[1])
+
+    p = Process(target=run, args=(args,))
+    p.start()
+    p.join()
+
+    sys.exit(p.exitcode)
 
 
 def parse_args():
