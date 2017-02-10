@@ -26,7 +26,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.2"
+version = "0.1.3"
 
 setup(name="python-lambda-local",
       version=version,

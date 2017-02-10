@@ -2,6 +2,11 @@ box: python:2.7-slim
 
 build:
   steps:
+    - script:
+        name: virtualenv install
+        code: |
+          pip install virtualenv
+
     - virtualenv:
         name: setup virtual environment
         install_wheel: true # Enable wheel to speed up builds (experimental)

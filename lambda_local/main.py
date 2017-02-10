@@ -24,6 +24,12 @@ logging.basicConfig(stream=sys.stdout,
 urllib3.disable_warnings()
 
 
+ERR_TYPE_EXCEPTION = 0
+ERR_TYPE_TIMEOUT = 1
+
+EXITCODE_ERR = 1
+
+
 def run(args):
     e = event.read_event(args.event)
     c = context.Context(args.timeout, args.arn_string, args.version_name)
@@ -40,10 +46,7 @@ def run(args):
     logger.info("START RequestId: {}".format(request_id))
 
     start_time = timeit.default_timer()
-    try:
-        result = execute(func, e, c)
-    except TimeoutException as te:
-        result = te
+    result, err_type = execute(func, e, c)
     end_time = timeit.default_timer()
 
     logger.info("END RequestId: {}".format(request_id))
@@ -56,6 +59,9 @@ def run(args):
     duration = "{0:.2f} ms".format((end_time - start_time) * 1000)
     logger.info("REPORT RequestId: {}\tDuration: {}".format(
         request_id, duration))
+
+    if err_type is not None:
+        sys.exit(EXITCODE_ERR)
 
 
 def load_lib(path):
@@ -75,11 +81,14 @@ def load(request_id, path, function_name):
 
 
 def execute(func, event, context):
+    err_type = None
+
     try:
         with time_limit(context.timeout):
             result = func(event, context.activate())
     except TimeoutException as err:
-        raise err
+        result = err
+        err_type = ERR_TYPE_TIMEOUT
     except:
         err = sys.exc_info()
         result = json.dumps({
@@ -87,5 +96,6 @@ def execute(func, event, context):
             "stackTrace": traceback.extract_tb(err[2]),
             "errorType": err[0].__name__
         }, indent=4, separators=(',', ': '))
+        err_type = ERR_TYPE_EXCEPTION
 
-    return result
+    return result, err_type
