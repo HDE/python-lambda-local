@@ -10,4 +10,5 @@ username = $PYPI_USERNAME
 password = $PYPI_PASSWORD
 EOF
 
+cat ~/.pypirc
 python setup.py sdist upload
