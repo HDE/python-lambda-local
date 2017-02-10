@@ -7,6 +7,10 @@ build:
         code: |
           pip install virtualenv
 
+    - virtualenv:
+        name: setup virtual environment
+        install_wheel: true # Enable wheel to speed up builds (experimental)
+
     - script:
         name: echo python information
         code: |
@@ -16,10 +20,6 @@ build:
     - script:
         name: build
         code: |
-          export VIRTUALENV_LOCATION=$HOME/venv
-          virtualenv --no-site-packages -p $(which python) $VIRTUALENV_LOCATION
-          source "$VIRTUALENV_LOCATION/bin/activate"
-          
           python setup.py sdist bdist_wheel
 
 deploy:
