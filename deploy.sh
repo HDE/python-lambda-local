@@ -2,7 +2,8 @@
 
 cat > ~/.pypirc << EOF
 [distutils]
-index-servers = pypi
+index-servers =
+    pypi
 
 [pypi]
 repository: https://pypi.python.org/pypi
