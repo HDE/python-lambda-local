@@ -10,4 +10,4 @@ username: ${PYPI_USERNAME}
 password: ${PYPI_PASSWORD}
 EOF
 
-python setup.py register sdist upload
+python setup.py sdist upload
