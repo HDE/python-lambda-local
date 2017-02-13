@@ -2,6 +2,7 @@
 
 [![Join the chat at https://gitter.im/HDE/python-lambda-local](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![wercker status](https://app.wercker.com/status/04f5bc5b7de3d5c6f13eb5b871035226/s "wercker status")](https://app.wercker.com/project/bykey/04f5bc5b7de3d5c6f13eb5b871035226)
+[![PyPI version](https://badge.fury.io/py/python-lambda-local.svg)](https://badge.fury.io/py/python-lambda-local)
 
 Run lambda function on local machine
 
