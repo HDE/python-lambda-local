@@ -30,7 +30,7 @@ setup(name="python-lambda-local",
       long_description=open("README.rst").read(),
       classifiers=[
           'Development Status :: 3 - Alpha',
-          'Operating System :: POSIX ',
+          'Operating System :: POSIX',
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3.6',
