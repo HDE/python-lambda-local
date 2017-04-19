@@ -17,3 +17,8 @@ Version 0.1.3
 -------------
 
     - Exit with non-zero code when execution of function fails.
+
+Version 0.1.4
+-------------
+
+    - Support Python 3.6.
