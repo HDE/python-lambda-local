@@ -1,5 +1,5 @@
 '''
-Copyright 2015 HDE, Inc.
+Copyright 2015-2017 HDE, Inc.
 Licensed under MIT.
 '''
 
@@ -13,10 +13,10 @@ import os
 import timeit
 from botocore.vendored.requests.packages import urllib3
 
-import event
-import context
-from timeout import time_limit
-from timeout import TimeoutException
+from . import event
+from . import context
+from .timeout import time_limit
+from .timeout import TimeoutException
 
 logging.basicConfig(stream=sys.stdout,
                     level=logging.INFO,

@@ -2,6 +2,33 @@ box: python:2.7-slim
 
 build:
   steps:
+
+build-py2:
+  box: python:2.7-slim
+  steps:
+    - script:
+        name: virtualenv install
+        code: |
+          pip install virtualenv
+
+    - virtualenv:
+        name: setup virtual environment
+        install_wheel: true # Enable wheel to speed up builds (experimental)
+
+    - script:
+        name: echo python information
+        code: |
+          echo "python version $(python --version) running"
+          echo "pip version $(pip --version) running"
+
+    - script:
+        name: build
+        code: |
+          python setup.py sdist bdist_wheel
+
+build-py3:
+  box: python:3.6-slim
+  steps:
     - script:
         name: virtualenv install
         code: |

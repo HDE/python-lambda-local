@@ -1,15 +1,16 @@
 '''
 python-lambda-local: Main module
 
-Copyright 2015 HDE, Inc.
+Copyright 2015-2017 HDE, Inc.
 Licensed under MIT.
 '''
 
 from __future__ import print_function
 import argparse
-from main import run
 import sys
 from multiprocessing import Process
+
+from .main import run
 
 
 def main():
@@ -45,6 +46,7 @@ Default: 3")
                         type=str, default="", help="function version name")
 
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     main()

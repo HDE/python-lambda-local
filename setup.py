@@ -1,11 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Note that "python setup.py test" invokes pytest on the package. With
-appropriately configured setup.cfg, this will check both xxx_test modules and
-docstrings.
-
-Copyright 2015 HDE, Inc.
+Copyright 2015-2017 HDE, Inc.
 Licensed under MIT.
 '''
 import sys
@@ -26,15 +22,19 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.3"
+version = "0.1.4"
 
 setup(name="python-lambda-local",
       version=version,
       description="Run lambda function in python on local machine.",
       long_description=open("README.rst").read(),
       classifiers=[
-        'Development Status :: 1 - Planning',
-        'Programming Language :: Python'
+          'Development Status :: 3 - Alpha',
+          'Operating System :: POSIX ',
+          'Programming Language :: Python',
+          'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3.6',
+          'License :: OSI Approved :: MIT License'
       ],
       keywords="AWS Lambda",
       author="YANG Xudong",
