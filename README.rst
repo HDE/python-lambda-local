@@ -1,12 +1,15 @@
 python-lambda-local
 ===================
 
+|Join the chat at https://gitter.im/HDE/python-lambda-local| |wercker
+status| |PyPI version|
+
 Run lambda function on local machine
 
 Prepare development environment
 -------------------------------
 
-Please use a newly created virtualenv for python2.7.
+Please use a newly created virtualenv of Python 2.7 or Python 3.6 .
 
 Installation
 ------------
@@ -15,8 +18,7 @@ Within virtualenv, run the following command.
 
 .. code:: bash
 
-    $ cd $PROJECT_ROOT
-    $ pip install ./
+    $ pip install python-lambda-local
 
 This will install the package with name ``python-lambda-local`` in the
 virtualenv. Now you can use the command ``python-lambda-local`` to run
@@ -30,7 +32,7 @@ Run ``python-lambda-local -h`` to see the help.
 ::
 
     usage: python-lambda-local [-h] [-l LIBRARY_PATH] [-f HANDLER_FUNCTION]
-                               [-t TIMEOUT]
+                               [-t TIMEOUT] [-a ARN_STRING] [-v VERSION_NAME]
                                FILE EVENT
 
     Run AWS Lambda function written in Python on local machine.
@@ -47,6 +49,10 @@ Run ``python-lambda-local -h`` to see the help.
                             Lambda function handler name. Default: "handler".
       -t TIMEOUT, --timeout TIMEOUT
                             Seconds until lambda function timeout. Default: 3
+      -a ARN_STRING, --arn-string ARN_STRING
+                            arn string for function
+      -v VERSION_NAME, --version-name VERSION_NAME
+                            function version name
 
 Prepare development directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,25 +66,25 @@ Suppose your project directory is like this:
 
     ├── event.json
     ├── lib
-    │   ├── rx
-    │   │   ├── abstractobserver.py
-    │   │   ├── ... (package content of rx)
+    │   ├── rx
+    │   │   ├── abstractobserver.py
+    │   │   ├── ... (package content of rx)
     ...
-    │   │       └── testscheduler.py
-    │   └── Rx-1.2.3.dist-info
-    │       ├── DESCRIPTION.rst
-    │       ├── METADATA
-    │       ├── metadata.json
-    │       ├── pbr.json
-    │       ├── RECORD
-    │       ├── top_level.txt
-    │       ├── WHEEL
-    │       └── zip-safe
+    │   │       └── testscheduler.py
+    │   └── Rx-1.2.3.dist-info
+    │       ├── DESCRIPTION.rst
+    │       ├── METADATA
+    │       ├── metadata.json
+    │       ├── pbr.json
+    │       ├── RECORD
+    │       ├── top_level.txt
+    │       ├── WHEEL
+    │       └── zip-safe
     └── test.py
 
-In the handler's code is in ``test.py`` and the function name of the
+The handler's code is in ``test.py`` and the function name of the
 handler is ``handler``. The source depends on 3rd party library ``rx``
-and it is install in the directory ``lib``. The test event of json
+and it is installed in the directory ``lib``. The test event in json
 format is in ``event.json`` file.
 
 Content of ``test.py``:
@@ -86,15 +92,16 @@ Content of ``test.py``:
 
 .. code:: python
 
+    from __future__ import print_function
     from rx import Observable
 
 
     def handler(event, context):
-        xs = Observable.from_([1, 2, 3, 4, 5, 6])
+        xs = Observable.from_(range(event['answer']))
         ys = xs.to_blocking()
-        zs = (x*x for x in ys if x > 3)
+        zs = (x*x for x in ys if x % 7 == 0)
         for x in zs:
-            print x
+            print(x)
 
 Content of ``event.json``:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -102,7 +109,7 @@ Content of ``event.json``:
 .. code:: json
 
     {
-      "key": "value"
+      "answer": 42
     }
 
 Run the lambda function
@@ -119,10 +126,22 @@ The output will be like:
 
 ::
 
-    [INFO 2015-10-16 18:21:14,774] Event: {'key': 'value'}
-    [INFO 2015-10-16 18:21:14,774] START RequestId: 324cb1c5-fa9b-4f39-8ad9-01c95f7d5744
-    16
-    25
-    36
-    [INFO 2015-10-16 18:21:14,775] END RequestId: 324cb1c5-fa9b-4f39-8ad9-01c95f7d5744
-    [INFO 2015-10-16 18:21:14,775] RESULT: None
+    [root - INFO - 2017-04-19 12:39:05,512] Event: {u'answer': 42}
+    [root - INFO - 2017-04-19 12:39:05,512] START RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1
+    0
+    49
+    196
+    441
+    784
+    1225
+    [root - INFO - 2017-04-19 12:39:05,515] END RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1
+    [root - INFO - 2017-04-19 12:39:05,515] RESULT:
+    None
+    [root - INFO - 2017-04-19 12:39:05,515] REPORT RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1  Duration: 2.27 ms
+
+.. |Join the chat at https://gitter.im/HDE/python-lambda-local| image:: https://badges.gitter.im/Join%20Chat.svg
+   :target: https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+.. |wercker status| image:: https://app.wercker.com/status/04f5bc5b7de3d5c6f13eb5b871035226/s
+   :target: https://app.wercker.com/project/bykey/04f5bc5b7de3d5c6f13eb5b871035226
+.. |PyPI version| image:: https://badge.fury.io/py/python-lambda-local.svg
+   :target: https://badge.fury.io/py/python-lambda-local
