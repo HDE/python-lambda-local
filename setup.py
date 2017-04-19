@@ -1,11 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Note that "python setup.py test" invokes pytest on the package. With
-appropriately configured setup.cfg, this will check both xxx_test modules and
-docstrings.
-
-Copyright 2015 HDE, Inc.
+Copyright 2015-2017 HDE, Inc.
 Licensed under MIT.
 '''
 import sys
