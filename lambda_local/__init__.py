@@ -10,7 +10,7 @@ import argparse
 import sys
 from multiprocessing import Process
 
-from .main import run
+from lambda_local.main import run
 
 
 def main():
