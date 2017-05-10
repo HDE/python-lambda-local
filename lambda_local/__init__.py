@@ -11,7 +11,7 @@ import sys
 from multiprocessing import Process
 import pkg_resources
 
-from .main import run
+from lambda_local.main import run
 
 
 __version__ = pkg_resources.require("python-lambda-local")[0].version
