@@ -20,9 +20,6 @@ __version__ = pkg_resources.require("python-lambda-local")[0].version
 def main():
     args = parse_args()
 
-    print(args.version)
-    return
-
     p = Process(target=run, args=(args,))
     p.start()
     p.join()
