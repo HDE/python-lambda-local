@@ -129,3 +129,8 @@ The output will be like:
 None
 [root - INFO - 2017-04-19 12:39:05,515] REPORT RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1	Duration: 2.27 ms
 ```
+
+#### Dynamic events:
+
+Instead of an event.json file, any executable can be passed to `python-lambda-local` as the event path.
+In this case, it will be executed, and its stdout will be used as the event.
