@@ -15,9 +15,11 @@ class TimeoutException(Exception):
 def time_limit(seconds):
     def signal_handler(signum, frame):
         raise TimeoutException("Timeout after {} seconds.".format(seconds))
-    signal.signal(signal.SIGALRM, signal_handler)
-    signal.alarm(seconds)
+    if hasattr(signal, "SIGALRM"):
+        signal.signal(signal.SIGALRM, signal_handler)
+        signal.alarm(seconds)
     try:
         yield
     finally:
-        signal.alarm(0)
+        if hasattr(signal, "SIGALRM"):
+            signal.alarm(0)
