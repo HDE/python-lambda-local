@@ -49,6 +49,9 @@ default: 3")
     parser.add_argument("-v", "--version-name", metavar="VERSION_NAME",
                         type=str, default="",
                         help="lambda function version name")
+    parser.add_argument("-e", "--environment-variables",
+                        metavar="ENVIRONMENT_VARIABLES", type=str,
+                        help="path to flat json file with environment variables")
 
     parser.add_argument("--version", action="version",
                         version="%(prog)s " + __version__,

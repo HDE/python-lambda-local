@@ -49,6 +49,8 @@ optional arguments:
                         ARN string for lambda function
   -v VERSION_NAME, --version-name VERSION_NAME
                         lambda function version name
+  -e ENVIRONMENT_VARIABLES, --environment-variables ENVIRONMENT_VARIABLES
+                        path to flat json file with environment variables
   --version             print the version of python-lambda-local and exit
 ```
 
