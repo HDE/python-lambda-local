@@ -15,6 +15,7 @@ from botocore.vendored.requests.packages import urllib3
 
 from . import event
 from . import context
+from .environment_variables import set_environment_variables
 from .timeout import time_limit
 from .timeout import TimeoutException
 
@@ -31,6 +32,9 @@ EXITCODE_ERR = 1
 
 
 def run(args):
+    # set env vars if path to json file was given
+    set_environment_variables(args.environment_variables)
+
     e = event.read_event(args.event)
     c = context.Context(args.timeout, args.arn_string, args.version_name)
     if args.library is not None:
