@@ -22,7 +22,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.4"
+version = "0.1.5"
 
 setup(name="python-lambda-local",
       version=version,
@@ -48,5 +48,5 @@ setup(name="python-lambda-local",
       cmdclass={'test': PyTest},
       install_requires=['boto3'],
       entry_points={
-        'console_scripts': ['python-lambda-local=lambda_local:main']
+          'console_scripts': ['python-lambda-local=lambda_local:main']
       })
