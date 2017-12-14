@@ -28,26 +28,30 @@ Run `python-lambda-local -h` to see the help.
 ```
 usage: python-lambda-local [-h] [-l LIBRARY_PATH] [-f HANDLER_FUNCTION]
                            [-t TIMEOUT] [-a ARN_STRING] [-v VERSION_NAME]
+                           [--version]
                            FILE EVENT
 
 Run AWS Lambda function written in Python on local machine.
 
 positional arguments:
-  FILE                  Lambda function file name
-  EVENT                 Event data file name.
+  FILE                  lambda function file name
+  EVENT                 event data file name
 
 optional arguments:
   -h, --help            show this help message and exit
   -l LIBRARY_PATH, --library LIBRARY_PATH
-                        Path of 3rd party libraries.
+                        path of 3rd party libraries
   -f HANDLER_FUNCTION, --function HANDLER_FUNCTION
-                        Lambda function handler name. Default: "handler".
+                        lambda function handler name, default: "handler"
   -t TIMEOUT, --timeout TIMEOUT
-                        Seconds until lambda function timeout. Default: 3
+                        seconds until lambda function timeout, default: 3
   -a ARN_STRING, --arn-string ARN_STRING
-                        arn string for function
+                        ARN string for lambda function
   -v VERSION_NAME, --version-name VERSION_NAME
-                        function version name
+                        lambda function version name
+  -e ENVIRONMENT_VARIABLES, --environment-variables ENVIRONMENT_VARIABLES
+                        path to flat json file with environment variables
+  --version             print the version of python-lambda-local and exit
 ```
 
 ### Prepare development directory
