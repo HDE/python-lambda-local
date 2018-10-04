@@ -58,3 +58,6 @@ target/
 
 # Python environment
 .python-version
+
+# Vitual Environments
+venv/
