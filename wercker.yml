@@ -26,6 +26,11 @@ build-py2:
         code: |
           python setup.py sdist bdist_wheel
 
+    - script:
+        name: test
+        code: |
+          python setup.py test
+
 build-py3:
   box: python:3.6-slim
   steps:
@@ -48,6 +53,11 @@ build-py3:
         name: build
         code: |
           python setup.py sdist bdist_wheel
+
+    - script:
+        name: test
+        code: |
+          python setup.py test
 
 deploy:
   pypi:
