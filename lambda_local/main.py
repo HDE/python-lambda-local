@@ -1,5 +1,5 @@
 '''
-Copyright 2015-2017 HDE, Inc.
+Copyright 2015-2018 HDE, Inc.
 Licensed under MIT.
 '''
 
@@ -15,7 +15,7 @@ from botocore.vendored.requests.packages import urllib3
 
 from . import event
 from . import context
-from .environment_variables import set_environment_variables
+from .environment_variables import set_environment_variables, export_variables
 from .timeout import time_limit
 from .timeout import TimeoutException
 
@@ -31,6 +31,17 @@ ERR_TYPE_TIMEOUT = 1
 EXITCODE_ERR = 1
 
 
+def call(func, event, timeout, environment_variables={}, arn_string="", version_name="", library=None):
+    export_variables(environment_variables)
+    e = json.loads(event)
+    c = context.Context(timeout, arn_string, version_name)
+    if library is not None:
+        load_lib(library)
+    request_id = uuid.uuid4()
+
+    return _runner(request_id, e, c, func)
+
+
 def run(args):
     # set env vars if path to json file was given
     set_environment_variables(args.environment_variables)
@@ -41,16 +52,23 @@ def run(args):
         load_lib(args.library)
     request_id = uuid.uuid4()
     func = load(request_id, args.file, args.function)
+    
+    (result, err_type) = _runner(request_id, e, c, func)
 
+    if err_type is not None:
+        sys.exit(EXITCODE_ERR)
+
+
+def _runner(request_id, event, context, func):
     logger = logging.getLogger()
     result = None
 
-    logger.info("Event: {}".format(e))
+    logger.info("Event: {}".format(event))
 
     logger.info("START RequestId: {}".format(request_id))
 
     start_time = timeit.default_timer()
-    result, err_type = execute(func, e, c)
+    result, err_type = execute(func, event, context)
     end_time = timeit.default_timer()
 
     logger.info("END RequestId: {}".format(request_id))
@@ -64,8 +82,7 @@ def run(args):
     logger.info("REPORT RequestId: {}\tDuration: {}".format(
         request_id, duration))
 
-    if err_type is not None:
-        sys.exit(EXITCODE_ERR)
+    return (result, err_type)
 
 
 def load_lib(path):
