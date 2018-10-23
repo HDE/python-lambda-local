@@ -1,7 +1,7 @@
 '''
 python-lambda-local: Main module
 
-Copyright 2015-2017 HDE, Inc.
+Copyright 2015-2018 HDE, Inc.
 Licensed under MIT.
 '''
 

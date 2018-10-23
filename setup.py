@@ -1,7 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Copyright 2015-2017 HDE, Inc.
+Copyright 2015-2018 HDE, Inc.
 Licensed under MIT.
 '''
 import io
