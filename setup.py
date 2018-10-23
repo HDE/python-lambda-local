@@ -4,6 +4,7 @@ python-lambda-local: Run lambda function in python on local machine.
 Copyright 2015-2017 HDE, Inc.
 Licensed under MIT.
 '''
+import io
 import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
@@ -27,7 +28,7 @@ version = "0.1.6"
 setup(name="python-lambda-local",
       version=version,
       description="Run lambda function in python on local machine.",
-      long_description=open("README.rst").read(),
+      long_description=io.open("README.rst", encoding="utf-8").read(),
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Operating System :: POSIX',
