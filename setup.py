@@ -1,7 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Copyright 2015-2017 HDE, Inc.
+Copyright 2015-2018 HDE, Inc.
 Licensed under MIT.
 '''
 import io
@@ -34,7 +34,7 @@ setup(name="python-lambda-local",
           'Operating System :: POSIX',
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
-          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
           'License :: OSI Approved :: MIT License'
       ],
       keywords="AWS Lambda",

@@ -27,7 +27,7 @@ build-py2:
           python setup.py sdist bdist_wheel
 
 build-py3:
-  box: python:3.6-slim
+  box: python:3.7-slim
   steps:
     - script:
         name: virtualenv install
