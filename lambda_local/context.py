@@ -30,6 +30,7 @@ class Context(object):
         self.identity = identity
         self.client_context = client_context
 
+        self._timeout_in_seconds = timeout_in_seconds
         self._duration = timedelta(seconds=timeout_in_seconds)
 
     def get_remaining_time_in_millis(self):

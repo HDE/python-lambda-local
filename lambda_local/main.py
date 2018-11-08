@@ -31,15 +31,20 @@ ERR_TYPE_TIMEOUT = 1
 EXITCODE_ERR = 1
 
 
-def call(func, event, timeout, environment_variables={}, arn_string="", version_name="", library=None):
-    export_variables(environment_variables)
-    e = json.loads(event)
-    c = context.Context(timeout, arn_string, version_name)
-    if library is not None:
-        load_lib(library)
-    request_id = uuid.uuid4()
+class ContextFilter(logging.Filter):
+    def __init__(self, context):
+        super(ContextFilter, self).__init__()
+        self.context = context
 
-    return _runner(request_id, e, c, func)
+    def filter(self, record):
+        record.aws_request_id = self.context.aws_request_id
+        return True
+
+
+def call(func, event, context, environment_variables={}):
+    export_variables(environment_variables)
+
+    return _runner(func, event, context)
 
 
 def run(args):
@@ -47,32 +52,35 @@ def run(args):
     set_environment_variables(args.environment_variables)
 
     e = event.read_event(args.event)
-    c = context.Context(args.timeout, args.arn_string, args.version_name)
+    c = context.Context(
+        args.timeout,
+        invoked_function_arn=args.arn_string,
+        function_version=args.version_name)
     if args.library is not None:
         load_lib(args.library)
-    request_id = uuid.uuid4()
-    func = load(request_id, args.file, args.function)
-    
-    (result, err_type) = _runner(request_id, e, c, func)
+    func = load(c.aws_request_id, args.file, args.function)
+
+    (result, err_type) = _runner(func, e, c)
 
     if err_type is not None:
         sys.exit(EXITCODE_ERR)
 
 
-def _runner(request_id, event, context, func):
+def _runner(func, event, context):
     logger = logging.getLogger()
+    log_filter = ContextFilter(context)
+    logger.addFilter(log_filter)
+
     result = None
 
     logger.info("Event: {}".format(event))
-
-    logger.info("START RequestId: {}".format(request_id))
+    logger.info("START RequestId: {}".format(context.aws_request_id))
 
     start_time = timeit.default_timer()
     result, err_type = execute(func, event, context)
     end_time = timeit.default_timer()
 
-    logger.info("END RequestId: {}".format(request_id))
-
+    logger.info("END RequestId: {}".format(context.aws_request_id))
     if type(result) is TimeoutException:
         logger.error("RESULT:\n{}".format(result))
     else:
@@ -80,7 +88,7 @@ def _runner(request_id, event, context, func):
 
     duration = "{0:.2f} ms".format((end_time - start_time) * 1000)
     logger.info("REPORT RequestId: {}\tDuration: {}".format(
-        request_id, duration))
+        context.aws_request_id, duration))
 
     return (result, err_type)
 
@@ -105,7 +113,7 @@ def execute(func, event, context):
     err_type = None
 
     try:
-        with time_limit(context.timeout):
+        with time_limit(context._timeout_in_seconds):
             result = func(event, context.activate())
     except TimeoutException as err:
         result = err
