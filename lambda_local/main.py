@@ -8,10 +8,10 @@ import sys
 import traceback
 import json
 import logging
-import uuid
 import os
 import timeit
 from botocore.vendored.requests.packages import urllib3
+import multiprocessing
 
 from . import event
 from . import context
@@ -68,27 +68,27 @@ def run(args):
 
 def _runner(func, event, context):
     logger = logging.getLogger()
-    log_filter = ContextFilter(context)
-    logger.addFilter(log_filter)
-
-    result = None
 
     logger.info("Event: {}".format(event))
-    logger.info("START RequestId: {}".format(context.aws_request_id))
+    logger.info("START RequestId: {} Version: {}".format(
+        context.aws_request_id, context.function_version))
 
-    start_time = timeit.default_timer()
-    result, err_type = execute(func, event, context)
-    end_time = timeit.default_timer()
+    queue = multiprocessing.Queue()
+    p = multiprocessing.Process(
+        target=execute_in_process,
+        args=(queue, func, event, context,))
+    p.start()
+    (result, err_type, duration) = queue.get()
+    p.join()
 
     logger.info("END RequestId: {}".format(context.aws_request_id))
+    duration = "{0:.2f} ms".format(duration)
+    logger.info("REPORT RequestId: {}\tDuration: {}".format(
+        context.aws_request_id, duration))
     if type(result) is TimeoutException:
         logger.error("RESULT:\n{}".format(result))
     else:
         logger.info("RESULT:\n{}".format(result))
-
-    duration = "{0:.2f} ms".format((end_time - start_time) * 1000)
-    logger.info("REPORT RequestId: {}\tDuration: {}".format(
-        context.aws_request_id, duration))
 
     return (result, err_type)
 
@@ -112,9 +112,13 @@ def load(request_id, path, function_name):
 def execute(func, event, context):
     err_type = None
 
+    logger = logging.getLogger()
+    log_filter = ContextFilter(context)
+    logger.addFilter(log_filter)
+
     try:
         with time_limit(context._timeout_in_seconds):
-            result = func(event, context.activate())
+            result = func(event, context._activate())
     except TimeoutException as err:
         result = err
         err_type = ERR_TYPE_TIMEOUT
@@ -128,3 +132,12 @@ def execute(func, event, context):
         err_type = ERR_TYPE_EXCEPTION
 
     return result, err_type
+
+
+def execute_in_process(queue, func, event, context):
+    start_time = timeit.default_timer()
+    result, err_type = execute(func, event, context)
+    end_time = timeit.default_timer()
+    duration = (end_time - start_time) * 1000
+
+    queue.put((result, err_type, duration))
