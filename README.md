@@ -21,14 +21,14 @@ $ pip install python-lambda-local
 This will install the package with name `python-lambda-local` in the virtualenv.
 Now you can use the command `python-lambda-local` to run your AWS Lambda function written in Python on your own machine.
 
-## Usage
+## Usage as a shell command
 
 Run `python-lambda-local -h` to see the help.
 
 ```
 usage: python-lambda-local [-h] [-l LIBRARY_PATH] [-f HANDLER_FUNCTION]
                            [-t TIMEOUT] [-a ARN_STRING] [-v VERSION_NAME]
-                           [--version]
+                           [-e ENVIRONMENT_VARIABLES] [--version]
                            FILE EVENT
 
 Run AWS Lambda function written in Python on local machine.
@@ -118,16 +118,50 @@ python-lambda-local -l lib/ -f handler -t 5 test.py event.json
 The output will be like:
 
 ```
-[root - INFO - 2017-04-19 12:39:05,512] Event: {u'answer': 42}
-[root - INFO - 2017-04-19 12:39:05,512] START RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1
+[root - INFO - 2018-11-20 17:10:53,352] Event: {'answer': 42}
+[root - INFO - 2018-11-20 17:10:53,352] START RequestId: 3c8e6db4-886a-43da-a1c7-5e6f715de531 Version: 
 0
 49
 196
 441
 784
 1225
-[root - INFO - 2017-04-19 12:39:05,515] END RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1
-[root - INFO - 2017-04-19 12:39:05,515] RESULT:
+[root - INFO - 2018-11-20 17:10:53,359] END RequestId: 3c8e6db4-886a-43da-a1c7-5e6f715de531
+[root - INFO - 2018-11-20 17:10:53,360] REPORT RequestId: 3c8e6db4-886a-43da-a1c7-5e6f715de531	Duration: 2.17 ms
+[root - INFO - 2018-11-20 17:10:53,360] RESULT:
 None
-[root - INFO - 2017-04-19 12:39:05,515] REPORT RequestId: b918f9ae-0ca1-44af-9937-dd5f9eeedcc1	Duration: 2.27 ms
+```
+
+## Usage as a library
+
+### API signature
+
+``` python
+call(func, event, context, environment_variables={})
+```
+
+Call a handler function `func` with given `event`, `context` and custom `environment_variables`.
+
+### Sample
+
+1. Make sure the 3rd party libraries used in the AWS Lambda function can be imported.
+
+``` bash
+pip install rx
+```
+
+2. To call the lambda function above with your python code:
+
+``` python
+from lambda_local.main import call
+from lambda_local.context import Context
+
+import test
+
+event = {
+    "answer": 42
+}
+context = Context(5)
+
+call(test.handler, event, context)
 ```
