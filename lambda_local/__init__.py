@@ -7,12 +7,9 @@ Licensed under MIT.
 
 from __future__ import print_function
 import argparse
-import sys
-from multiprocessing import Process
 import pkg_resources
 
 from .main import run
-
 
 __version__ = pkg_resources.require("python-lambda-local")[0].version
 
