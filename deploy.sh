@@ -11,4 +11,6 @@ username: ${PYPI_USERNAME}
 password: ${PYPI_PASSWORD}
 EOF
 
-python setup.py sdist upload
+pip install twine
+twine upload -r pypi dist/*
+
