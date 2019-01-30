@@ -7,24 +7,16 @@ Licensed under MIT.
 
 from __future__ import print_function
 import argparse
-import sys
-from multiprocessing import Process
 import pkg_resources
 
 from .main import run
-
 
 __version__ = pkg_resources.require("python-lambda-local")[0].version
 
 
 def main():
     args = parse_args()
-
-    p = Process(target=run, args=(args,))
-    p.start()
-    p.join()
-
-    sys.exit(p.exitcode)
+    run(args)
 
 
 def parse_args():

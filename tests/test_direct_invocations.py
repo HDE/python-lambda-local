@@ -13,15 +13,17 @@ from multiprocessing import Process
 import os
 from lambda_local.main import run as lambda_run
 from lambda_local.main import call as lambda_call
+from lambda_local.context import Context
 
 
 def my_lambda_function(event, context):
     print("Hello World from My Lambda Function!")
     return 42
 
+
 def test_function_call_for_pytest():
-    request = json.dumps({})
-    (result, error_type) = lambda_call(func=my_lambda_function, event=request, timeout=1)
+    (result, error_type) = lambda_call(
+        my_lambda_function, {}, Context(1))
 
     assert error_type is None
 
@@ -31,7 +33,7 @@ def test_function_call_for_pytest():
 def test_check_command_line():
     request = json.dumps({})
     request_file = 'check_command_line_event.json'
-    with open (request_file, "w") as f:
+    with open(request_file, "w") as f:
         f.write(request)
 
     args = argparse.Namespace(event=request_file,
@@ -49,4 +51,3 @@ def test_check_command_line():
 
     os.remove(request_file)
     assert p.exitcode == 0
-    
