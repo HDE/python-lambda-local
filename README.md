@@ -137,10 +137,10 @@ None
 ### API signature
 
 ``` python
-call(func, event, context, environment_variables={})
+call(func, event, timeout, environment_variables={})
 ```
 
-Call a handler function `func` with given `event`, `context` and custom `environment_variables`.
+Call a handler function `func` with given `event`, `timeout` and custom `environment_variables`.
 
 ### Sample
 
@@ -157,11 +157,11 @@ from lambda_local.main import call
 from lambda_local.context import Context
 
 import test
+import json
 
 event = {
     "answer": 42
 }
-context = Context(5)
 
-call(test.handler, event, context)
+call(test.handler, json.dumps(event), 5)
 ```
