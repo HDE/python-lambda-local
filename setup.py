@@ -25,6 +25,10 @@ class PyTest(TestCommand):
 
 version = "0.1.8"
 
+TEST_REQUIRE = ['pytest']
+if sys.version_info[0] == 2:
+    TEST_REQUIRE = ['pytest==4.6.3']
+
 setup(name="python-lambda-local",
       version=version,
       description="Run lambda function in python on local machine.",
@@ -45,7 +49,7 @@ setup(name="python-lambda-local",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest'],
+      tests_require=TEST_REQUIRE,
       cmdclass={'test': PyTest},
       install_requires=['boto3'],
       entry_points={
