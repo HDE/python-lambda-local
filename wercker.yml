@@ -61,7 +61,8 @@ build-py3:
 
 deploy:
   pypi:
-  - script:
-      name: deploy to pypi
-      code: |
-        sh deploy.sh
+  steps:
+    - script:
+        name: deploy to pypi
+        code: |
+          sh deploy.sh
