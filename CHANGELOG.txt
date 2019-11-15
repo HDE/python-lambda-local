@@ -42,3 +42,8 @@ Version 0.1.8
 -------------
 
     - Support running as a library.
+
+Version 0.1.9
+-------------
+
+    - Support latest boto3.
