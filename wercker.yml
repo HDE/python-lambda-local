@@ -60,10 +60,9 @@ build-py3:
           python setup.py test
 
 deploy:
-  box: python:3.7-slim
   steps:
     - script:
         name: deploy to pypi
         code: |
-          cd $WERCKER_ROOT
+          cd build-py3
           sh deploy.sh
