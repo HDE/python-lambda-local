@@ -65,5 +65,5 @@ deploy:
     - script:
         name: deploy to pypi
         code: |
-          ls
+          cd $WERCKER_ROOT
           sh deploy.sh
