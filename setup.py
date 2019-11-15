@@ -1,7 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Copyright 2015-2018 HDE, Inc.
+Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 import io
@@ -23,7 +23,11 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.8"
+version = "0.1.9"
+
+TEST_REQUIRE = ['pytest']
+if sys.version_info[0] == 2:
+    TEST_REQUIRE = ['pytest==4.6.3']
 
 setup(name="python-lambda-local",
       version=version,
@@ -34,7 +38,7 @@ setup(name="python-lambda-local",
           'Operating System :: POSIX',
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
-          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.7',
           'License :: OSI Approved :: MIT License'
       ],
       keywords="AWS Lambda",
@@ -45,7 +49,7 @@ setup(name="python-lambda-local",
       packages=find_packages(exclude=['examples', 'tests']),
       include_package_data=True,
       zip_safe=False,
-      tests_require=['pytest'],
+      tests_require=TEST_REQUIRE,
       cmdclass={'test': PyTest},
       install_requires=['boto3'],
       entry_points={

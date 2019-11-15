@@ -1,5 +1,5 @@
 '''
-Copyright 2015-2018 HDE, Inc.
+Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 
@@ -10,7 +10,6 @@ import json
 import logging
 import os
 import timeit
-from botocore.vendored.requests.packages import urllib3
 import multiprocessing
 
 from . import event
@@ -22,7 +21,6 @@ from .timeout import TimeoutException
 logging.basicConfig(stream=sys.stdout,
                     level=logging.INFO,
                     format='[%(name)s - %(levelname)s - %(asctime)s] %(message)s')
-urllib3.disable_warnings()
 
 
 ERR_TYPE_EXCEPTION = 0
