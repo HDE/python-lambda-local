@@ -4,7 +4,7 @@ python-lambda-local: Test Direct Inovactions
 
 Meant for use with py.test.
 
-Copyright 2015 HDE, Inc.
+Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT
 '''
 import json

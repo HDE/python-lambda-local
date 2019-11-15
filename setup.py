@@ -1,7 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Copyright 2015-2018 HDE, Inc.
+Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 import io
@@ -23,7 +23,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.8"
+version = "0.1.9"
 
 TEST_REQUIRE = ['pytest']
 if sys.version_info[0] == 2:
