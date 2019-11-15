@@ -65,4 +65,5 @@ deploy:
     - script:
         name: deploy to pypi
         code: |
+          ls
           sh deploy.sh
