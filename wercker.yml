@@ -1,4 +1,4 @@
-box: python:2.7-slim
+box: python:3.7-slim
 
 build:
   steps:
@@ -32,7 +32,7 @@ build-py2:
           python setup.py test
 
 build-py3:
-  box: python:3.6-slim
+  box: python:3.7-slim
   steps:
     - script:
         name: virtualenv install
