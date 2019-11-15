@@ -60,7 +60,7 @@ build-py3:
           python setup.py test
 
 deploy:
-  pypi:
+  box: python:3.7-slim
   steps:
     - script:
         name: deploy to pypi
