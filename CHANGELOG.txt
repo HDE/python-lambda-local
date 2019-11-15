@@ -22,3 +22,23 @@ Version 0.1.4
 -------------
 
     - Support Python 3.6.
+
+Version 0.1.5
+-------------
+
+    - Support reading environment variables from file.
+
+Version 0.1.6
+-------------
+
+    - Add timeout feature for Windows.
+
+Version 0.1.7
+-------------
+
+    - Add tests in CI.
+
+Version 0.1.8
+-------------
+
+    - Support running as a library.
