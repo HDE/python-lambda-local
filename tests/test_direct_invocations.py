@@ -63,3 +63,26 @@ def test_check_command_line():
 
     os.remove(request_file)
     assert p.exitcode == 0
+
+
+def test_check_command_line_error():
+    request = json.dumps({})
+    request_file = 'check_command_line_event.json'
+    with open(request_file, "w") as f:
+        f.write(request)
+
+    args = argparse.Namespace(event=request_file,
+                              file='tests/test_direct_invocations.py',
+                              function='my_failing_lambda_function',
+                              timeout=1,
+                              environment_variables='',
+                              library=None,
+                              version_name='',
+                              arn_string=''
+                              )
+    p = Process(target=lambda_run, args=(args,))
+    p.start()
+    p.join()
+
+    os.remove(request_file)
+    assert p.exitcode == 1
