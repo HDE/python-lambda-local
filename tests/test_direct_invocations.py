@@ -1,5 +1,5 @@
 '''
-python-lambda-local: Test Direct Inovactions 
+python-lambda-local: Test Direct Invocations
 (command-line and direct).
 
 Meant for use with py.test.
@@ -13,12 +13,17 @@ from multiprocessing import Process
 import os
 from lambda_local.main import run as lambda_run
 from lambda_local.main import call as lambda_call
+from lambda_local.main import ERR_TYPE_EXCEPTION
 from lambda_local.context import Context
 
 
 def my_lambda_function(event, context):
     print("Hello World from My Lambda Function!")
     return 42
+
+
+def my_failing_lambda_function(event, context):
+    raise Exception('Oh no')
 
 
 def test_function_call_for_pytest():
@@ -28,6 +33,13 @@ def test_function_call_for_pytest():
     assert error_type is None
 
     assert result == 42
+
+
+def test_handle_exceptions_gracefully():
+    (result, error_type) = lambda_call(
+        my_failing_lambda_function, {}, Context(1))
+
+    assert error_type is ERR_TYPE_EXCEPTION
 
 
 def test_check_command_line():
