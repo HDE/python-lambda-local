@@ -124,7 +124,7 @@ def execute(func, event, context):
         err = sys.exc_info()
         result = json.dumps({
             "errorMessage": str(err[1]),
-            "stackTrace": traceback.format_exc(),
+            "stackTrace": traceback.format_tb(err[2]),
             "errorType": err[0].__name__
         }, indent=4, separators=(',', ': '))
         err_type = ERR_TYPE_EXCEPTION
