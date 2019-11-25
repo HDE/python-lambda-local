@@ -47,3 +47,8 @@ Version 0.1.9
 -------------
 
     - Support latest boto3.
+
+Version 0.1.10
+--------------
+
+    - Fix traceback output when exception happens.
