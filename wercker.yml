@@ -1,4 +1,4 @@
-box: python:3.7-slim
+box: python:3-slim
 
 build:
   steps:
@@ -13,7 +13,7 @@ build-py2:
 
     - virtualenv:
         name: setup virtual environment
-        install_wheel: true # Enable wheel to speed up builds (experimental)
+        install_wheel: true
 
     - script:
         name: echo python information
@@ -31,7 +31,7 @@ build-py2:
         code: |
           python setup.py test
 
-build-py3:
+build-py37:
   box: python:3.7-slim
   steps:
     - script:
@@ -41,7 +41,35 @@ build-py3:
 
     - virtualenv:
         name: setup virtual environment
-        install_wheel: true # Enable wheel to speed up builds (experimental)
+        install_wheel: true
+
+    - script:
+        name: echo python information
+        code: |
+          echo "python version $(python --version) running"
+          echo "pip version $(pip --version) running"
+
+    - script:
+        name: build
+        code: |
+          python setup.py sdist bdist_wheel
+
+    - script:
+        name: test
+        code: |
+          python setup.py test
+
+build-py38:
+  box: python:3.8-slim
+  steps:
+    - script:
+        name: virtualenv install
+        code: |
+          pip install virtualenv
+
+    - virtualenv:
+        name: setup virtual environment
+        install_wheel: true
 
     - script:
         name: echo python information
@@ -64,5 +92,4 @@ deploy:
     - script:
         name: deploy to pypi
         code: |
-          cd build-py3
           sh deploy.sh
