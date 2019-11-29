@@ -23,7 +23,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.10"
+version = "0.1.11"
 
 TEST_REQUIRE = ['pytest']
 if sys.version_info[0] == 2:
