@@ -64,5 +64,4 @@ deploy:
     - script:
         name: deploy to pypi
         code: |
-          cd build-py3
           sh deploy.sh

@@ -12,5 +12,9 @@ password: ${PYPI_PASSWORD}
 EOF
 
 pip install twine
-twine upload -r pypi dist/*
 
+mkdir dist
+cp build-py2/dist/* dist/
+cp build-py3/dist/* dist/
+
+twine upload -r pypi dist/*
