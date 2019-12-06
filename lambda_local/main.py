@@ -3,7 +3,6 @@ Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 
-import imp
 import sys
 import traceback
 import json
@@ -103,6 +102,7 @@ def load(request_id, path, function_name):
     sys.path.append(file_directory)
 
     if sys.version_info.major == 2:
+        import imp
         mod = imp.load_source(mod_name, path)
     elif sys.version_info.major == 3 and sys.version_info.minor >= 5:
         import importlib
