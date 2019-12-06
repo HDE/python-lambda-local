@@ -102,7 +102,17 @@ def load(request_id, path, function_name):
     file_directory = os.path.dirname(file_path)
     sys.path.append(file_directory)
 
-    mod = imp.load_source(mod_name, path)
+    if sys.version_info.major == 2:
+        mod = imp.load_source(mod_name, path)
+    elif sys.version_info.major == 3 and sys.version_info.minor >= 5:
+        import importlib
+        spec = importlib.util.spec_from_file_location(mod_name, path)
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules[mod_name] = mod
+        spec.loader.exec_module(mod)
+    else:
+        raise Exception("unsupported python version")
+
     func = getattr(mod, function_name)
     return func
 
