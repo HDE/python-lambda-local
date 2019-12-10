@@ -3,7 +3,6 @@ Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 
-import imp
 import sys
 import traceback
 import json
@@ -39,10 +38,32 @@ class ContextFilter(logging.Filter):
         return True
 
 
+class FunctionLoader():
+    def __init__(self,
+                 request_id=None,
+                 source=None,
+                 function_name=None,
+                 library_path=None,
+                 func=None):
+        self.request_id = request_id
+        self.source = source
+        self.function_name = function_name
+        self.library_path = library_path
+
+        self.func = func
+
+    def load(self):
+        if self.library_path is not None:
+            load_lib(self.library_path)
+
+        self.func = load_source(
+            self.request_id, self.source, self.function_name)
+
+
 def call(func, event, context, environment_variables={}):
     export_variables(environment_variables)
-
-    return _runner(func, event, context)
+    loader = FunctionLoader(func=func)
+    return _runner(loader, event, context)
 
 
 def run(args):
@@ -54,17 +75,19 @@ def run(args):
         args.timeout,
         invoked_function_arn=args.arn_string,
         function_version=args.version_name)
-    if args.library is not None:
-        load_lib(args.library)
-    func = load(c.aws_request_id, args.file, args.function)
+    loader = FunctionLoader(
+        request_id=c.aws_request_id,
+        source=args.file,
+        function_name=args.function,
+        library_path=args.library)
 
-    (result, err_type) = _runner(func, e, c)
+    (result, err_type) = _runner(loader, e, c)
 
     if err_type is not None:
         sys.exit(EXITCODE_ERR)
 
 
-def _runner(func, event, context):
+def _runner(loader, event, context):
     logger = logging.getLogger()
 
     logger.info("Event: {}".format(event))
@@ -74,7 +97,7 @@ def _runner(func, event, context):
     queue = multiprocessing.Queue()
     p = multiprocessing.Process(
         target=execute_in_process,
-        args=(queue, func, event, context,))
+        args=(queue, loader, event, context,))
     p.start()
     (result, err_type, duration) = queue.get()
     p.join()
@@ -95,14 +118,25 @@ def load_lib(path):
     sys.path.append(os.path.abspath(path))
 
 
-def load(request_id, path, function_name):
+def load_source(request_id, path, function_name):
     mod_name = 'request-' + str(request_id)
 
     file_path = os.path.abspath(path)
     file_directory = os.path.dirname(file_path)
     sys.path.append(file_directory)
 
-    mod = imp.load_source(mod_name, path)
+    if sys.version_info.major == 2:
+        import imp
+        mod = imp.load_source(mod_name, path)
+    elif sys.version_info.major == 3 and sys.version_info.minor >= 5:
+        import importlib
+        spec = importlib.util.spec_from_file_location(mod_name, path)
+        mod = importlib.util.module_from_spec(spec)
+        sys.modules[mod_name] = mod
+        spec.loader.exec_module(mod)
+    else:
+        raise Exception("unsupported python version")
+
     func = getattr(mod, function_name)
     return func
 
@@ -132,9 +166,11 @@ def execute(func, event, context):
     return result, err_type
 
 
-def execute_in_process(queue, func, event, context):
+def execute_in_process(queue, loader, event, context):
+    if loader.func is None:
+        loader.load()
     start_time = timeit.default_timer()
-    result, err_type = execute(func, event, context)
+    result, err_type = execute(loader.func, event, context)
     end_time = timeit.default_timer()
     duration = (end_time - start_time) * 1000
 

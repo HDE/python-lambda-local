@@ -23,7 +23,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.11"
+version = "0.1.12"
 
 TEST_REQUIRE = ['pytest']
 if sys.version_info[0] == 2:
@@ -39,11 +39,12 @@ setup(name="python-lambda-local",
           'Programming Language :: Python',
           'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
           'License :: OSI Approved :: MIT License'
       ],
       keywords="AWS Lambda",
       author="YANG Xudong",
-      author_email="xudong.yang@hde.co.jp",
+      author_email="xudong.yang@hennge.com",
       url="https://github.com/HDE/python-lambda-local",
       license="MIT",
       packages=find_packages(exclude=['examples', 'tests']),
