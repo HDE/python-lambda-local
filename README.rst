@@ -188,3 +188,15 @@ Sample
    :target: https://app.wercker.com/project/bykey/04f5bc5b7de3d5c6f13eb5b871035226
 .. |PyPI version| image:: https://badge.fury.io/py/python-lambda-local.svg
    :target: https://badge.fury.io/py/python-lambda-local
+
+To Contribute
+-------------
+
+In order to contribute to `python-lambda-local`, you'll need to fork the repository and clone your forked repo.
+To begin running locally, run::
+
+    pip install .
+    python -m lambda_local.__init__ -f handler -t 5 --verbose test.py event.json
+
+
+where you'll need to create a `test.py` and `event.json` files, as outlined above.

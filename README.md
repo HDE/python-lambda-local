@@ -165,3 +165,18 @@ context = Context(5)
 
 call(test.handler, event, context)
 ```
+
+## To Contribute
+
+In order to contribute to `python-lambda-local`, you'll need to fork the repository and clone your forked repo.
+To begin running locally, run:
+
+```bash
+pip install .
+```
+
+```bash
+python -m lambda_local.__init__ -f handler -t 5 --verbose test.py event.json
+```
+
+where you'll need to create a `test.py` and `event.json` files, as outlined above.
