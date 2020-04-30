@@ -33,7 +33,7 @@ Run ``python-lambda-local -h`` to see the help.
 
    usage: python-lambda-local [-h] [-l LIBRARY_PATH] [-f HANDLER_FUNCTION]
                               [-t TIMEOUT] [-a ARN_STRING] [-v VERSION_NAME]
-                              [-e ENVIRONMENT_VARIABLES] [--version]
+                              [-e ENVIRONMENT_VARIABLES] [--version] [--verbose]
                               FILE EVENT
 
    Run AWS Lambda function written in Python on local machine.
@@ -57,6 +57,8 @@ Run ``python-lambda-local -h`` to see the help.
      -e ENVIRONMENT_VARIABLES, --environment-variables ENVIRONMENT_VARIABLES
                            path to flat json file with environment variables
      --version             print the version of python-lambda-local and exit
+     --verbose             print all logging information. when not provided,
+                           truncated logs will print
 
 Prepare development directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
