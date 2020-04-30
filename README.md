@@ -139,7 +139,7 @@ None
 ### API signature
 
 ``` python
-call(func, event, context, environment_variables={})
+call(func, event, context, environment_variables={}, verbose=True)
 ```
 
 Call a handler function `func` with given `event`, `context` and custom `environment_variables`.
@@ -164,6 +164,7 @@ event = {
     "answer": 42
 }
 context = Context(5)
+
 
 call(test.handler, event, context)
 ```

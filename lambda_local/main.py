@@ -67,9 +67,11 @@ class FunctionLoader():
             self.request_id, self.source, self.function_name)
 
 
-def call(func, event, context, environment_variables={}):
+def call(func, event, context, environment_variables={}, verbose=True):
     export_variables(environment_variables)
-    loader = FunctionLoader(func=func)
+    loader = FunctionLoader(func=func, verbose=verbose)
+    # Sets the logger format based on the verbose option
+    set_logger_config(verbose)
     return _runner(loader, event, context)
 
 

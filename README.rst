@@ -153,7 +153,7 @@ API signature
 
 .. code:: python
 
-   call(func, event, context, environment_variables={})
+   call(func, event, context, environment_variables={}, verbose=True)
 
 Call a handler function ``func`` with given ``event``, ``context`` and
 custom ``environment_variables``.
