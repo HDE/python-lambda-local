@@ -55,7 +55,8 @@ def test_check_command_line():
                               environment_variables='',
                               library=None,
                               version_name='',
-                              arn_string=''
+                              arn_string='',
+                              verbose=True,
                               )
     p = Process(target=lambda_run, args=(args,))
     p.start()
@@ -78,7 +79,8 @@ def test_check_command_line_error():
                               environment_variables='',
                               library=None,
                               version_name='',
-                              arn_string=''
+                              arn_string='',
+                              verbose=True,
                               )
     p = Process(target=lambda_run, args=(args,))
     p.start()
