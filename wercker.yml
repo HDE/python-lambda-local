@@ -64,5 +64,5 @@ deploy:
     - script:
         name: deploy to pypi
         code: |
-          cp build-py2/deploy.sh .
+          cp build-py37/deploy.sh .
           sh deploy.sh
