@@ -6,7 +6,7 @@ Licensed under MIT.
 import signal
 import threading
 from contextlib import contextmanager
-from six.moves import _thread
+import _thread
 
 
 class TimeoutException(Exception):
