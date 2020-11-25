@@ -3,34 +3,6 @@ box: python:3-slim
 build:
   steps:
 
-build-py2:
-  box: python:2.7-slim
-  steps:
-    - script:
-        name: virtualenv install
-        code: |
-          pip install virtualenv
-
-    - virtualenv:
-        name: setup virtual environment
-        install_wheel: true
-
-    - script:
-        name: echo python information
-        code: |
-          echo "python version $(python --version) running"
-          echo "pip version $(pip --version) running"
-
-    - script:
-        name: build
-        code: |
-          python setup.py sdist bdist_wheel
-
-    - script:
-        name: test
-        code: |
-          python setup.py test
-
 build-py37:
   box: python:3.7-slim
   steps:
@@ -92,5 +64,5 @@ deploy:
     - script:
         name: deploy to pypi
         code: |
-          cp build-py2/deploy.sh .
+          cp build-py37/deploy.sh .
           sh deploy.sh

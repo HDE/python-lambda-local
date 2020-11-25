@@ -8,7 +8,7 @@ Run lambda function on local machine
 
 ## Prepare development environment
 
-Please use a newly created virtualenv of Python 2.7 or Python 3.7.
+Please use a newly created virtualenv of Python 3.7+.
 
 ## Installation
 

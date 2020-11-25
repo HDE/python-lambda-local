@@ -14,7 +14,6 @@ EOF
 pip install twine
 
 mkdir dist
-cp build-py2/dist/* dist/
 cp build-py37/dist/* dist/
 cp build-py38/dist/* dist/
 
