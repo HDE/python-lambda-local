@@ -75,7 +75,7 @@ Suppose your project directory is like this:
    │   │   ├── ... (package content of rx)
    ...
    │   │       └── testscheduler.py
-   │   └── Rx-1.2.3.dist-info
+   │   └── Rx-1.6.1.dist-info
    │       ├── DESCRIPTION.rst
    │       ├── METADATA
    │       ├── metadata.json
@@ -164,7 +164,7 @@ Sample
 
 .. code:: bash
 
-   pip install rx
+   pip install rx==1.6.1
 
 2. To call the lambda function above with your python code:
 

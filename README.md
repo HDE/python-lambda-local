@@ -68,7 +68,7 @@ Suppose your project directory is like this:
 │   │   ├── ... (package content of rx)
 ...
 │   │       └── testscheduler.py
-│   └── Rx-1.2.3.dist-info
+│   └── Rx-1.6.1.dist-info
 │       ├── DESCRIPTION.rst
 │       ├── METADATA
 │       ├── metadata.json
@@ -147,7 +147,7 @@ Call a handler function `func` with given `event`, `context` and custom `environ
 1. Make sure the 3rd party libraries used in the AWS Lambda function can be imported.
 
 ``` bash
-pip install rx
+pip install rx==1.6.1
 ```
 
 2. To call the lambda function above with your python code:
