@@ -4,7 +4,7 @@ python-lambda-local: Test Direct Invocations
 
 Meant for use with py.test.
 
-Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
+Copyright 2015-2020 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT
 '''
 import json

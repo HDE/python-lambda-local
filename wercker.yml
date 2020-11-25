@@ -59,6 +59,34 @@ build-py38:
         code: |
           python setup.py test
 
+build-py39:
+  box: python:3.9-slim
+  steps:
+    - script:
+        name: virtualenv install
+        code: |
+          pip install virtualenv
+
+    - virtualenv:
+        name: setup virtual environment
+        install_wheel: true
+
+    - script:
+        name: echo python information
+        code: |
+          echo "python version $(python --version) running"
+          echo "pip version $(pip --version) running"
+
+    - script:
+        name: build
+        code: |
+          python setup.py sdist bdist_wheel
+
+    - script:
+        name: test
+        code: |
+          python setup.py test
+
 deploy:
   steps:
     - script:
