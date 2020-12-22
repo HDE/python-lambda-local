@@ -137,8 +137,12 @@ def load_source(request_id, path, function_name):
     else:
         raise Exception("unsupported python version")
 
-    func = getattr(mod, function_name)
-    return func
+    object_names = function_name.split('.')
+    object = mod
+    for name in object_names:
+        object = getattr(object, name)
+
+    return object
 
 
 def execute(func, event, context):
