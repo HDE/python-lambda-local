@@ -17,9 +17,13 @@ from .environment_variables import set_environment_variables, export_variables
 from .timeout import time_limit
 from .timeout import TimeoutException
 
-logging.basicConfig(stream=sys.stdout,
-                    level=logging.INFO,
-                    format='[%(name)s - %(levelname)s - %(asctime)s] %(message)s')
+def set_logger_config(verbose):
+    format = '%(message)s'
+    if verbose:
+        format = '[%(name)s - %(levelname)s - %(asctime)s] %(message)s'
+    logging.basicConfig(stream=sys.stdout,
+                        level=logging.INFO,
+                        format=format)
 
 
 ERR_TYPE_EXCEPTION = 0
@@ -44,11 +48,14 @@ class FunctionLoader():
                  source=None,
                  function_name=None,
                  library_path=None,
+                 verbose=None,
+
                  func=None):
         self.request_id = request_id
         self.source = source
         self.function_name = function_name
         self.library_path = library_path
+        self.verbose = verbose
 
         self.func = func
 
@@ -60,15 +67,19 @@ class FunctionLoader():
             self.request_id, self.source, self.function_name)
 
 
-def call(func, event, context, environment_variables={}):
+def call(func, event, context, environment_variables={}, verbose=True):
     export_variables(environment_variables)
-    loader = FunctionLoader(func=func)
+    loader = FunctionLoader(func=func, verbose=verbose)
+    # Sets the logger format based on the verbose option
+    set_logger_config(verbose)
     return _runner(loader, event, context)
 
 
 def run(args):
     # set env vars if path to json file was given
     set_environment_variables(args.environment_variables)
+    # Sets the logger format based on the verbose option
+    set_logger_config(args.verbose)
 
     e = event.read_event(args.event)
     c = context.Context(
@@ -79,7 +90,9 @@ def run(args):
         request_id=c.aws_request_id,
         source=args.file,
         function_name=args.function,
-        library_path=args.library)
+        library_path=args.library,
+        verbose=args.verbose,
+        )
 
     (result, err_type) = _runner(loader, e, c)
 
@@ -91,8 +104,9 @@ def _runner(loader, event, context):
     logger = logging.getLogger()
 
     logger.info("Event: {}".format(event))
-    logger.info("START RequestId: {} Version: {}".format(
-        context.aws_request_id, context.function_version))
+    if loader.verbose:
+        logger.info("START RequestId: {} Version: {}".format(
+            context.aws_request_id, context.function_version))
 
     queue = multiprocessing.Queue()
     p = multiprocessing.Process(
@@ -102,14 +116,20 @@ def _runner(loader, event, context):
     (result, err_type, duration) = queue.get()
     p.join()
 
-    logger.info("END RequestId: {}".format(context.aws_request_id))
+    if loader.verbose:
+        logger.info("END RequestId: {}".format(context.aws_request_id))
     duration = "{0:.2f} ms".format(duration)
-    logger.info("REPORT RequestId: {}\tDuration: {}".format(
-        context.aws_request_id, duration))
-    if type(result) is TimeoutException:
-        logger.error("RESULT:\n{}".format(result))
+
+    if loader.verbose:
+        logger.info("REPORT RequestId: {}\tDuration: {}".format(
+            context.aws_request_id, duration))
     else:
-        logger.info("RESULT:\n{}".format(result))
+        logger.info("Duration: {}".format(duration))
+
+    if type(result) is TimeoutException:
+        logger.error("Result: {}".format(result))
+    else:
+        logger.info("Result: {}".format(result))
 
     return (result, err_type)
 

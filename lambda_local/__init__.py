@@ -48,6 +48,9 @@ default: 3")
     parser.add_argument("--version", action="version",
                         version="%(prog)s " + __version__,
                         help="print the version of python-lambda-local and exit")
+    parser.add_argument("--verbose", action='store_true', help="print all logging information. \
+                        when not provided, truncated logs will print")
+
 
     return parser.parse_args()
 

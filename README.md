@@ -28,7 +28,7 @@ Run `python-lambda-local -h` to see the help.
 ```
 usage: python-lambda-local [-h] [-l LIBRARY_PATH] [-f HANDLER_FUNCTION]
                            [-t TIMEOUT] [-a ARN_STRING] [-v VERSION_NAME]
-                           [-e ENVIRONMENT_VARIABLES] [--version]
+                           [-e ENVIRONMENT_VARIABLES] [--version] [--verbose]
                            FILE EVENT
 
 Run AWS Lambda function written in Python on local machine.
@@ -52,6 +52,8 @@ optional arguments:
   -e ENVIRONMENT_VARIABLES, --environment-variables ENVIRONMENT_VARIABLES
                         path to flat json file with environment variables
   --version             print the version of python-lambda-local and exit
+  --verbose             print all logging information. when not provided,
+                        truncated logs will print
 ```
 
 ### Prepare development directory
@@ -119,7 +121,7 @@ The output will be like:
 
 ```
 [root - INFO - 2018-11-20 17:10:53,352] Event: {'answer': 42}
-[root - INFO - 2018-11-20 17:10:53,352] START RequestId: 3c8e6db4-886a-43da-a1c7-5e6f715de531 Version: 
+[root - INFO - 2018-11-20 17:10:53,352] START RequestId: 3c8e6db4-886a-43da-a1c7-5e6f715de531 Version:
 0
 49
 196
@@ -137,7 +139,7 @@ None
 ### API signature
 
 ``` python
-call(func, event, context, environment_variables={})
+call(func, event, context, environment_variables={}, verbose=True)
 ```
 
 Call a handler function `func` with given `event`, `context` and custom `environment_variables`.
@@ -162,6 +164,7 @@ event = {
     "answer": 42
 }
 context = Context(5)
+
 
 call(test.handler, event, context)
 ```
