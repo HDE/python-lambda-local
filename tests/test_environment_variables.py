@@ -1,3 +1,7 @@
+'''
+Copyright 2015-2022 HENNGE K.K. (formerly known as HDE, Inc.)
+Licensed under MIT.
+'''
 import os
 
 from lambda_local.environment_variables import set_environment_variables

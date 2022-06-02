@@ -1,15 +1,14 @@
 python-lambda-local
 ===================
 
-|Join the chat at https://gitter.im/HDE/python-lambda-local| |wercker
-status| |PyPI version|
+|Join the chat at https://gitter.im/HDE/python-lambda-local| |Github Actions status| |PyPI version|
 
 Run lambda function on local machine
 
 Prepare development environment
 -------------------------------
 
-Please use a newly created virtualenv of Python 2.7 or Python 3.7.
+Please use a newly created virtualenv of Python 3.7+.
 
 Installation
 ------------
@@ -75,7 +74,7 @@ Suppose your project directory is like this:
    │   │   ├── ... (package content of rx)
    ...
    │   │       └── testscheduler.py
-   │   └── Rx-1.2.3.dist-info
+   │   └── Rx-1.6.1.dist-info
    │       ├── DESCRIPTION.rst
    │       ├── METADATA
    │       ├── metadata.json
@@ -164,7 +163,7 @@ Sample
 
 .. code:: bash
 
-   pip install rx
+   pip install rx==1.6.1
 
 2. To call the lambda function above with your python code:
 
@@ -184,7 +183,7 @@ Sample
 
 .. |Join the chat at https://gitter.im/HDE/python-lambda-local| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-.. |wercker status| image:: https://app.wercker.com/status/04f5bc5b7de3d5c6f13eb5b871035226/s
-   :target: https://app.wercker.com/project/bykey/04f5bc5b7de3d5c6f13eb5b871035226
+.. |Github Actions status| image:: https://github.com/HDE/python-lambda-local/actions/workflows/execute_tests.yml/badge.svg
+   :target: https://github.com/HDE/python-lambda-local/actions/
 .. |PyPI version| image:: https://badge.fury.io/py/python-lambda-local.svg
    :target: https://badge.fury.io/py/python-lambda-local

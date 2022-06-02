@@ -1,0 +1,32 @@
+name: Execute tests
+
+on: push
+
+jobs:
+  execute_tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8', '3.9']
+    name: Python ${{ matrix.python-version }} tests
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Print information
+        run: |
+          echo "python version $(python --version) running"
+          echo "pip version $(pip --version) running"
+
+      - name: Build
+        run: |
+          pip install wheel
+          python setup.py sdist bdist_wheel
+
+      - name: Test
+        run: |
+          python setup.py test

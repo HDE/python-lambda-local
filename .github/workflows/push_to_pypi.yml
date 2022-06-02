@@ -1,0 +1,40 @@
+name: Push package to pypi
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - release
+
+env:
+  PYTHON_VERSION: "3.9"
+
+jobs:
+  push_to_pypi:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Print information
+        run: |
+          echo "python version $(python --version) running"
+          echo "pip version $(pip --version) running"
+
+      - name: Build
+        run: |
+          pip install wheel
+          python setup.py sdist bdist_wheel
+
+      - name: Deploy
+        env:
+          PYPI_USERNAME: "${{ secrets.PYPI_USERNAME }}"
+          PYPI_PASSWORD: "${{ secrets.PYPI_PASSWORD }}"
+        run: |
+          sh deploy.sh

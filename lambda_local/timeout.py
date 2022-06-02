@@ -1,12 +1,12 @@
 '''
-Copyright 2015-2019 HENNGE K.K. (formerly known as HDE, Inc.)
+Copyright 2015-2022 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 
 import signal
 import threading
 from contextlib import contextmanager
-from six.moves import _thread
+import _thread
 
 
 class TimeoutException(Exception):
