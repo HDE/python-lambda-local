@@ -1,8 +1,7 @@
 python-lambda-local
 ===================
 
-|Join the chat at https://gitter.im/HDE/python-lambda-local| |wercker
-status| |PyPI version|
+|Join the chat at https://gitter.im/HDE/python-lambda-local| |Github Actions status| |PyPI version|
 
 Run lambda function on local machine
 
@@ -184,7 +183,7 @@ Sample
 
 .. |Join the chat at https://gitter.im/HDE/python-lambda-local| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-.. |wercker status| image:: https://app.wercker.com/status/04f5bc5b7de3d5c6f13eb5b871035226/s
-   :target: https://app.wercker.com/project/bykey/04f5bc5b7de3d5c6f13eb5b871035226
+.. |Github Actions status| image:: https://github.com/github/docs/actions/workflows/main.yml/badge.svg
+   :target: https://github.com/HDE/python-lambda-local/actions/
 .. |PyPI version| image:: https://badge.fury.io/py/python-lambda-local.svg
    :target: https://badge.fury.io/py/python-lambda-local
