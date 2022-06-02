@@ -1,7 +1,7 @@
 '''
 python-lambda-local: Run lambda function in python on local machine.
 
-Copyright 2015-2020 HENNGE K.K. (formerly known as HDE, Inc.)
+Copyright 2015-2022 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 import io
@@ -23,7 +23,7 @@ class PyTest(TestCommand):
         sys.exit(pytest.main(self.test_args))
 
 
-version = "0.1.12"
+version = "0.1.13"
 
 TEST_REQUIRE = ['pytest']
 
@@ -41,8 +41,8 @@ setup(name="python-lambda-local",
           'License :: OSI Approved :: MIT License'
       ],
       keywords="AWS Lambda",
-      author="YANG Xudong",
-      author_email="xudong.yang@hennge.com",
+      author="YANG Xudong, Iskandar Setiadi",
+      author_email="iskandar.setiadi@hennge.com",
       url="https://github.com/HDE/python-lambda-local",
       license="MIT",
       packages=find_packages(exclude=['examples', 'tests']),

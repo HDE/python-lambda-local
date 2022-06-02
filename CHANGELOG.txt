@@ -52,3 +52,21 @@ Version 0.1.10
 --------------
 
     - Fix traceback output when exception happens.
+
+Version 0.1.11
+--------------
+
+    - Test on python 3.8.
+
+Version 0.1.12
+--------------
+
+    - Fix error when running on Windows with Python 3.
+
+Version 0.1.13
+--------------
+
+    - Drop support of Python 2.7.
+    - Various update and cleanup, add Python 3.9 support.
+    - Add __main__ file for using the package as a module.
+    - Implement tests via Github Actions.

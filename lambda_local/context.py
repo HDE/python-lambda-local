@@ -1,5 +1,5 @@
 '''
-Copyright 2015-2020 HENNGE K.K. (formerly known as HDE, Inc.)
+Copyright 2015-2022 HENNGE K.K. (formerly known as HDE, Inc.)
 Licensed under MIT.
 '''
 from __future__ import print_function

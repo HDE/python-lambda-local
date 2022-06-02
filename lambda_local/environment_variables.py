@@ -1,3 +1,7 @@
+'''
+Copyright 2015-2022 HENNGE K.K. (formerly known as HDE, Inc.)
+Licensed under MIT.
+'''
 import json
 import os
 
