@@ -183,7 +183,7 @@ Sample
 
 .. |Join the chat at https://gitter.im/HDE/python-lambda-local| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-.. |Github Actions status| image:: https://github.com/github/docs/actions/workflows/main.yml/badge.svg
+.. |Github Actions status| image:: https://github.com/HDE/python-lambda-local/actions/workflows/execute_tests.yml/badge.svg
    :target: https://github.com/HDE/python-lambda-local/actions/
 .. |PyPI version| image:: https://badge.fury.io/py/python-lambda-local.svg
    :target: https://badge.fury.io/py/python-lambda-local
