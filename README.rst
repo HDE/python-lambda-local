@@ -90,6 +90,13 @@ handler is ``handler``. The source depends on 3rd party library ``rx``
 and it is installed in the directory ``lib``. The test event in json
 format is in ``event.json`` file.
 
+Installing ``rx`` library in ``lib/``:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: bash
+
+   pip install --target lib rx==1.6.1
+
 Content of ``test.py``:
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -179,7 +186,8 @@ Sample
    }
    context = Context(5)
 
-   call(test.handler, event, context)
+   if __name__ == '__main__':
+       call(test.handler, event, context)
 
 .. |Join the chat at https://gitter.im/HDE/python-lambda-local| image:: https://badges.gitter.im/Join%20Chat.svg
    :target: https://gitter.im/HDE/python-lambda-local?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge

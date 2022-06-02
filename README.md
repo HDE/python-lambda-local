@@ -84,6 +84,12 @@ The handler's code is in `test.py` and the function name of the handler is `hand
 The source depends on 3rd party library `rx` and it is installed in the directory `lib`.
 The test event in json format is in `event.json` file.
 
+#### Installing `rx` library in `lib/`
+
+``` bash
+pip install --target lib rx==1.6.1
+```
+
 #### Content of `test.py`:
 
 ``` python
@@ -163,5 +169,6 @@ event = {
 }
 context = Context(5)
 
-call(test.handler, event, context)
+if __name__ == '__main__':
+    call(test.handler, event, context)
 ```
