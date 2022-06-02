@@ -26,6 +26,15 @@ def my_failing_lambda_function(event, context):
     raise Exception('Oh no')
 
 
+class MyLambdaClass:
+    def my_lambda_method(self, event, context):
+        print("Hello World from My Lambda Method!")
+        return 42
+
+
+my_lambda_instance = MyLambdaClass()
+
+
 def test_function_call_for_pytest():
     (result, error_type) = lambda_call(
         my_lambda_function, {}, Context(1))
@@ -86,3 +95,26 @@ def test_check_command_line_error():
 
     os.remove(request_file)
     assert p.exitcode == 1
+
+
+def test_check_command_line_nested_function_name():
+    request = json.dumps({})
+    request_file = 'check_command_line_event.json'
+    with open(request_file, "w") as f:
+        f.write(request)
+
+    args = argparse.Namespace(event=request_file,
+                              file='tests/test_direct_invocations.py',
+                              function='my_lambda_instance.my_lambda_method',
+                              timeout=1,
+                              environment_variables='',
+                              library=None,
+                              version_name='',
+                              arn_string=''
+                              )
+    p = Process(target=lambda_run, args=(args,))
+    p.start()
+    p.join()
+
+    os.remove(request_file)
+    assert p.exitcode == 0
