@@ -172,3 +172,8 @@ context = Context(5)
 if __name__ == '__main__':
     call(test.handler, event, context)
 ```
+
+#### Dynamic events:
+
+Instead of an event.json file, any executable can be passed to `python-lambda-local` as the event path.
+In this case, it will be executed, and its stdout will be used as the event.
