@@ -7,12 +7,11 @@ Licensed under MIT.
 
 from __future__ import print_function
 import argparse
-import pkg_resources
+import importlib.metadata
 
 from .main import run
 
-__version__ = pkg_resources.require("python-lambda-local")[0].version
-
+__version__ = importlib.metadata.version("python-lambda-local")
 
 def main():
     args = parse_args()
