@@ -7,11 +7,18 @@ Licensed under MIT.
 
 from __future__ import print_function
 import argparse
-import pkg_resources
+
+# Get the version of python-lambda-local
+try:
+    from importlib.metadata import version as get_version
+    __version__ = get_version("python-lambda-local")
+
+# If importlib.metadata is not available, use pkg_resources (older versions of Python)
+except ImportError:
+    from pkg_resources import require
+    __version__ = require("python-lambda-local")[0].version
 
 from .main import run
-
-__version__ = pkg_resources.require("python-lambda-local")[0].version
 
 
 def main():
